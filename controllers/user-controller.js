@@ -3,6 +3,7 @@ const { User, Thought } = require('../models');
 const userController = {
   // create User
   createUser({ body }, res) {
+    console.log(body);
     User.create(body)
       .then(dbUserData => res.json(dbUserData))
       .catch( (err) => res.status(400).json(err));
@@ -47,12 +48,12 @@ const userController = {
         if (!dbUserData){
           res.status(404).json({message: "No user found with this id!"});
           return;
-        }
-        res.json(dbUserData)
+        };
+        res.json(dbUserData);
       })
       .catch((err) => {
-        console.log(err)
-        res.status(400).json(err)
+        console.log(err);
+        res.status(400).json(err);
       });
   },
   // delete a user by ID, and see if I can delete all thoughts by that user
@@ -63,14 +64,15 @@ const userController = {
           res.status(404).json({message: "No user found with this id!"});
           return;
         }
+        // @todo find the thoughts and delete them
         dbUserData.thoughts.forEach(element => {
           Thought.findOneAndDelete({ _id: element })
         });
         res.json(dbUserData);
       })
       .catch((err) => {
-        console.log(err)
-        res.status(400).json(err)
+        console.log(err);
+        res.status(400).json(err);
       });
   },
 
@@ -89,8 +91,8 @@ const userController = {
       res.json(dbUserData);
     })
     .catch((err) => {
-      console.log(err)
-      res.status(400).json(err)
+      console.log(err);
+      res.status(400).json(err);
     });
     
   },
@@ -106,10 +108,11 @@ const userController = {
         res.status(404).json({message: "No user found with this id!"});
         return;
       };
-      res.json(dbUserData) } )
+      res.json(dbUserData);
+    })
     .catch((err) => {
-      console.log(err)
-      res.status(400).json(err)
+      console.log(err);
+      res.status(400).json(err);
     });
   }
 };
