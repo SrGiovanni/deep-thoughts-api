@@ -4,7 +4,9 @@ const {
     getAllThoughts,
     getThoughById,
     updateThought,
-    deleteThought
+    deleteThought,
+    addReaction,
+    removeReaction
 } = require('../../controllers/thought-controller');
 
 // create a thought, push thought to user's thoughts list
@@ -12,7 +14,7 @@ const {
 router.use('/')
     .get(getAllThoughts)
     .post(createThought);
-    
+
 // read a single thought by ID
 // update a thought by ID
 // delete a thought by ID
@@ -24,5 +26,10 @@ router.use('/:id')
 // Reactions
 // create a reaction at endpoint in comment reactions array /api/thoughts/:thoughtId/reactions
 // delete reaction and pull it from the comment reaction array
+router.use('/:thoughtId/reactions')
+    .post(addReaction);
+
+router.use('/:thoughtId/reactions/:reactionId')
+    .delete(removeReaction);
 
 module.exports = router;

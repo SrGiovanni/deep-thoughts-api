@@ -93,7 +93,39 @@ const thoughtController = {
 
     // Reactions
     // create a reaction at endpoint in comment reactions array /api/thoughts/:thoughtId/reactions
+    addReaction({ params, body}, res ) {
+        Thought.findByIdAndUpdate(
+            { _id: params.thoughtId },
+            { $push: {reactions: body }},
+            { new: true, runValidators: true }
+        )
+            .then( (dbThoughtData) => {
+                if (!dbThoughtData){
+                    res.status(404).json({ message: "No thought found with this id!" });
+                    return;
+                };
+
+                res.json(dbThoughtData);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(400).json(err);
+            });
+    },
     // delete reaction and pull it from the comment reaction array
+    removeReaction({ params }, res) {
+        Thought.findByIdAndUpdate(
+            { _id: params.thoughtId },
+            { $pull: {reactions: params.reactionId} },
+            { new: true }
+        )
+        .then( (dbThoughtData) => { res.json(dbThoughtData) })
+        .catch( err => {
+            console.log(err);
+            res.json(err)
+        })
+
+    }
 };
 
 module.exports = thoughtController;
