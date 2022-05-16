@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const express = require('express');
 const {
     createThought,
     getAllThoughts,
@@ -9,6 +9,7 @@ const {
     removeReaction
 } = require('../../controllers/thought-controller');
 
+const router = express.Router();
 // create a thought, push thought to user's thoughts list
 // read all thoughts
 router.use('/')

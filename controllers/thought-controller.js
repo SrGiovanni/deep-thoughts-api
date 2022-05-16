@@ -75,7 +75,7 @@ const thoughtController = {
                     res.status(404).json({ message: "No thought found with this id!" });
                     return;
                 };
-                User.findByIdAndUpdate( 
+                User.findOneAndUpdate( 
                     { username: dbThoughtData.username },
                     { $pull: { thoughts: dbThoughtData._id }},
                     { new: true }
@@ -123,8 +123,7 @@ const thoughtController = {
         .catch( err => {
             console.log(err);
             res.json(err)
-        })
-
+        });
     }
 };
 
